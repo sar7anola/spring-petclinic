@@ -36,7 +36,7 @@ services:
       SPRING_DATASOURCE_USERNAME: petclinic
       SPRING_DATASOURCE_PASSWORD: petclinic123
     ports:
-      - "30082:8080"
+      - "30082:9966"
     networks:
       - petclinic-net
 
