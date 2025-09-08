@@ -36,7 +36,7 @@ services:
       SPRING_DATASOURCE_USERNAME: petclinic
       SPRING_DATASOURCE_PASSWORD: petclinic123
     ports:
-      - "8082:8080"
+      - "30082:8080"
     networks:
       - petclinic-net
 
@@ -66,7 +66,7 @@ services:
     volumes:
       - grafana_data:/var/lib/grafana
     ports:
-      - "3000:3000"
+      - "30091:3000"
     networks:
       - petclinic-net
 
