@@ -1,11 +1,27 @@
-FROM maven:3.9.6-eclipse-temurin-17 AS build
+# ────────────── Stage 1: Build ──────────────
+FROM maven:3.9.9-eclipse-temurin-17 AS builder
+
 WORKDIR /app
-COPY . .
+
+# نسخ ملفات المشروع
+COPY pom.xml .
+COPY src ./src
+
+# بناء الـ jar
 RUN mvn clean package -DskipTests
 
-FROM openjdk:17-jdk-slim
+# ────────────── Stage 2: Run ──────────────
+FROM eclipse-temurin:17-jdk-alpine
+
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
-EXPOSE 9966
+
+# نسخ الـ jar الناتج من الـ build
+COPY --from=builder /app/target/*.jar app.jar
+
+# ضبط Profile و تعطيل H2 scripts
+ENV SPRING_PROFILES_ACTIVE=mysql
+ENV SPRING_SQL_INIT_MODE=never
+
+# تشغيل التطبيق
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
