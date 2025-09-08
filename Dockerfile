@@ -1,16 +1,11 @@
-FROM maven:3.9.9-eclipse-temurin-17 AS build
-WORKDIR /src
-COPY . .
-
-RUN mvn -B -DskipTests package
-
-
-
-FROM eclipse-temurin:17-jre
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-COPY --from=build /src/target/*.jar /app/app.jar
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
-HEALTHCHECK CMD curl -fsS http://localhost:8080/actuator/health || exit 1
-ENTRYPOINT ["java","-jar","/app/app.jar"]
