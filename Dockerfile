@@ -1,15 +1,25 @@
-# Use official JDK image
-FROM openjdk:21-jdk-slim
+# ====== Stage 1: Build ======
+FROM maven:3.9.9-eclipse-temurin-21 AS builder
 
-# Set working directory
 WORKDIR /app
 
-# Copy jar file from target (after mvn package)
-COPY target/*.jar app.jar
+# Copy pom.xml and download dependencies first (cache layer)
+COPY pom.xml .
+RUN mvn dependency:go-offline -B
 
-# Expose app port
-EXPOSE 9966
+# Copy source code and build
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Run the app
+# ====== Stage 2: Run ======
+FROM eclipse-temurin:21-jdk-jammy
+
+WORKDIR /app
+
+# Copy jar from builder stage
+COPY --from=builder /app/target/*.jar app.jar
+
+EXPOSE 8080
+
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
