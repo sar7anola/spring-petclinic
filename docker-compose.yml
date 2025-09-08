@@ -50,7 +50,7 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
-      - "9099:9090"
+      - "9199:9090"
     networks:
       - petclinic-net
 
