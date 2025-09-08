@@ -5,12 +5,10 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=petclinic
-      - MYSQL_USER=petclinic
-      - MYSQL_PASSWORD=petclinic
     ports:
       - "3307:3306"
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-ppetclinic"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,8 +24,8 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=mysql,spring-data-jpa
       - SPRING_DATASOURCE_URL=jdbc:mysql://petclinic-db:3306/petclinic?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-      - SPRING_DATASOURCE_USERNAME=petclinic
-      - SPRING_DATASOURCE_PASSWORD=petclinic
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
 
   prometheus:
     image: prom/prometheus:latest
