@@ -1,72 +1,43 @@
-version: "3.9"
-
-networks:
-  petclinic-net:
-    driver: bridge
-
-volumes:
-  db_data:
-  prometheus_data:
-  grafana_data:
-
 services:
-  # ────────────── Database ──────────────
-  mysql:
+  petclinic-db:
     image: mysql:8.0
     container_name: petclinic-db
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: petclinic
-      MYSQL_USER: petclinic
-      MYSQL_PASSWORD: petclinic123
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - petclinic-net
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=petclinic
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # ────────────── Spring PetClinic ──────────────
-  petclinic:
-    image: springcommunity/spring-petclinic-rest:latest
+  petclinic-app:
+    build: .
     container_name: petclinic-app
-    depends_on:
-      - mysql
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/petclinic
-      SPRING_DATASOURCE_USERNAME: petclinic
-      SPRING_DATASOURCE_PASSWORD: petclinic123
     ports:
       - "30082:9966"
-    networks:
-      - petclinic-net
+    depends_on:
+      petclinic-db:
+        condition: service_healthy
+    environment:
+      - SPRING_PROFILES_ACTIVE=mysql,spring-data-jpa
+      - SPRING_DATASOURCE_URL=jdbc:mysql://petclinic-db:3306/petclinic
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
 
-  # ────────────── Prometheus ──────────────
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
-    volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
-      - prometheus_data:/prometheus
-    command:
-      - '--config.file=/etc/prometheus/prometheus.yml'
     ports:
       - "30090:9090"
-    networks:
-      - petclinic-net
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
 
-  # ────────────── Grafana ──────────────
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
-    depends_on:
-      - prometheus
-    environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
-    volumes:
-      - grafana_data:/var/lib/grafana
     ports:
       - "30091:3000"
-    networks:
-      - petclinic-net
 
