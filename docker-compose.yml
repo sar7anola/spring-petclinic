@@ -1,6 +1,8 @@
+version: "3.9"
+
 services:
   petclinic-app:
-    build: .
+    build: ./petclinic-app
     container_name: petclinic-app
     ports:
       - "30082:9966"
@@ -13,7 +15,7 @@ services:
     ports:
       - "30090:9090"
     volumes:
-      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - /home/sar7an/petclinic/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
     image: grafana/grafana:latest
