@@ -10,12 +10,10 @@ services:
       - SPRING_PROFILES_ACTIVE=h2
 
   prometheus:
-    image: prom/prometheus:latest
+    build: ./monitoring
     container_name: prometheus
     ports:
       - "30090:9090"
-    volumes:
-      - /home/sar7an/petclinic/monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
 
   grafana:
     image: grafana/grafana:latest
