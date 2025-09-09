@@ -13,7 +13,7 @@ services:
       - "3307:3306"
 
   petclinic-app:
-    build: ./petclinic-app   # أو build: . إذا الكود في الجذر
+    build: .   # أو build: . إذا الكود في الجذر
     container_name: petclinic-app
     ports:
       - "30082:9966"
