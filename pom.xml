@@ -75,6 +75,10 @@
       <name>Spring Milestones</name>
       <url>https://repo.spring.io/milestone</url>
     </repository>
+    <repository>
+      <id>webjars</id>
+      <url>https://repo.webjars.org/maven2</url>
+    </repository>
   </repositories>
 
   <!-- ✅ رفع الـ artifacts إلى Nexus -->
