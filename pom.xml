@@ -20,6 +20,16 @@
     <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <webjars-locator.version>0.52</webjars-locator.version>
+    <webjars-bootstrap.version>5.3.3</webjars-bootstrap.version>
+    <webjars-font-awesome.version>6.5.1</webjars-font-awesome.version>
+    <spring-format.version>0.0.41</spring-format.version>
+    <maven-checkstyle.version>3.3.1</maven-checkstyle.version>
+    <checkstyle.version>10.12.7</checkstyle.version>
+    <nohttp-checkstyle.version>0.0.11</nohttp-checkstyle.version>
+    <jacoco.version>0.8.11</jacoco.version>
+    <lifecycle-mapping>1.0.0</lifecycle-mapping>
+    <libsass.version>0.2.29</libsass.version>
   </properties>
 
   <!-- ✅ Nexus repositories -->
@@ -37,6 +47,22 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <url>https://repo.spring.io/snapshot</url>
+    </repository>
+    <repository>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <url>https://repo.spring.io/milestone</url>
     </repository>
   </repositories>
 
@@ -300,24 +326,6 @@
     </license>
   </licenses>
 
-  <repositories>
-    <repository>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <id>spring-snapshots</id>
-      <name>Spring Snapshots</name>
-      <url>https://repo.spring.io/snapshot</url>
-    </repository>
-    <repository>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <id>spring-milestones</id>
-      <name>Spring Milestones</name>
-      <url>https://repo.spring.io/milestone</url>
-    </repository>
-  </repositories>
   <pluginRepositories>
     <pluginRepository>
       <snapshots>
