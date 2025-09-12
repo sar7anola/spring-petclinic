@@ -77,7 +77,7 @@
     </repository>
     <repository>
       <id>webjars</id>
-      <url>https://repo.webjars.org/maven2</url>
+      <url>https://repo1.maven.org/maven2/</url>
     </repository>
   </repositories>
 
