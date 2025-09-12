@@ -35,6 +35,17 @@
   <!-- ✅ Nexus repositories -->
   <repositories>
     <repository>
+      <id>central</id>
+      <name>Maven Central</name>
+      <url>https://repo.maven.apache.org/maven2</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+    <repository>
       <id>nexus-releases</id>
       <url>http://localhost:30092/repository/maven-releases/</url>
     </repository>
