@@ -18,7 +18,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: petclinic
     ports:
-      - "3312:3306"
+      - "33060:3306"
 
   prometheus:
     image: prom/prometheus:latest
