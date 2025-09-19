@@ -31,9 +31,9 @@ jobs:
       - name: Grant execute permission for Gradle
         run: chmod +x gradlew || echo "gradlew missing"
 
-      # Step 5: Build project with Gradle
-      - name: Build with Gradle
-        run: ./gradlew build -x test || gradle build -x test
+      # Step 5: Build project with Gradle (skip tests)
+      - name: Build with Gradle (skip tests)
+        run: ./gradlew build -x test
 
       # Step 6: Set up Docker (with Buildx)
       - name: Set up Docker
