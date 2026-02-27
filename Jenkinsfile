@@ -24,7 +24,7 @@ pipeline {
             steps {
                 sshagent(['ec2-ssh-key-id']) {
                     sh '''
-                    ansible-playbook -i inventory.ini deploy.yml
+                    ansible-playbook -i ansible/inventory.ini deploy.yml
                     '''
                 }
             }
