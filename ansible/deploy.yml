@@ -40,7 +40,7 @@
       apt:
         name: docker-compose-plugin
         state: present
-        become: yes
+      become: yes
 
     - name: Build and run containers
       shell: |
