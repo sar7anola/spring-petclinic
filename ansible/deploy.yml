@@ -35,6 +35,12 @@
         dest: /home/ubuntu/spring-petclinic
         version: main
         force: yes
+          
+    - name: Install Docker Compose plugin
+      apt:
+        name: docker-compose-plugin
+        state: present
+        become: yes
 
     - name: Build and run containers
       shell: |
