@@ -35,7 +35,19 @@
         dest: /home/ubuntu/spring-petclinic
         version: main
         force: yes
-          
+    
+    - name: Add Docker GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+      become: yes
+
+    - name: Add Docker repo
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+      become: yes
+
     - name: Install Docker Compose plugin
       apt:
         name: docker-compose-plugin
